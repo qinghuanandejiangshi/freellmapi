@@ -6,6 +6,7 @@
 
 - [OpenAI 兼容客户端](#openai-兼容客户端)
 - [编程智能体](#编程智能体)
+- [QwenPaw](#qwenpaw)
 - [原生 Gemini 客户端](#原生-gemini-客户端)
 - [Ollama 客户端](#ollama-客户端)
 - [无头客户端](#无头客户端)
@@ -48,10 +49,11 @@ npx freellmapi setup-dsh --url http://localhost:3001 --api-key <统一密钥>
 | **Kilo Code** | `setup-kilo` | `http://localhost:3001/v1` | OpenAI Chat |
 | **Crush** | `setup-crush` | `http://localhost:3001/v1` | OpenAI Chat |
 | **DeepSeek Harness** | `setup-dsh` | `http://localhost:3001/v1` | OpenAI Chat (`api: openai-completions`) |
+| **QwenPaw** | 手动配置 | `http://localhost:3001/v1` | OpenAI Chat (`chat.completions`) |
 | **Cursor** | `setup-cursor` 打印指引 | 公共 `https://…/v1` | OpenAI Chat |
 | **其他** | `setup-generic` 打印现成配置块 | `http://localhost:3001/v1` | OpenAI Chat |
 
-根路径与 `/v1` 的区别很重要：Claude Code 期望服务器根路径，因为它会追加 Anthropic Messages 路径。本表中兼容 OpenAI 的客户端——包括 Cline、Aider、Goose、Codex、Continue、OpenCode、Qwen、Roo、Kilo、Crush 和 DeepSeek Harness——期望它们配置的 base URL 包含 `/v1`。
+根路径与 `/v1` 的区别很重要：Claude Code 期望服务器根路径，因为它会追加 Anthropic Messages 路径。本表中兼容 OpenAI 的客户端——包括 Cline、Aider、Goose、Codex、Continue、OpenCode、Qwen、Roo、Kilo、Crush、QwenPaw 和 DeepSeek Harness——期望它们配置的 base URL 包含 `/v1`。
 
 ### DeepSeek Harness (`dsh`)
 
@@ -65,6 +67,26 @@ npx @deepseek-ai/dsh web
 ```
 
 设置是热重载的，所以运行中的 `dsh` 下一次请求就会用上这条路由。`--profile <name>` 添加第二条路由（`freellmapi-<name>`）而不改变默认模型；`--model <id>` 固定默认值。路由只声明文本——在 `freellmapi.models` 下给某模型条目加上 `input: [text, image]` 即可发图。尊重 `DSH_HOME`。
+
+### QwenPaw
+
+[QwenPaw](https://github.com/agentscope-ai/QwenPaw) 支持使用 OpenAI
+`chat.completions` API 的自定义提供方。先启动 FreeLLMAPI，并从其仪表盘创建或复制统一密钥，
+然后在 QwenPaw Console 中打开 **Settings → Models**：
+
+1. 在 **Providers** 下选择 **Add Provider**。
+2. 将 id 设为 `freellmapi` 等便于识别的值，显示名称可设为 `FreeLLMAPI`。
+3. 兼容模式选择 OpenAI `chat.completions`。
+4. 将 **Base URL** 设为 `http://localhost:3001/v1`，将 **API Key** 设为
+   FreeLLMAPI 统一密钥。
+5. 在该提供方下添加模型。可使用 `auto` 让 FreeLLMAPI 自动路由，或从
+   `GET http://localhost:3001/v1/models` 复制当前可用的模型 id。
+6. 选中新提供方和模型，保存前先执行 **Test Connection**。
+
+如果 QwenPaw 在容器中运行，`localhost` 指向的是该容器，而不是运行 FreeLLMAPI 的宿主机。
+请改用 QwenPaw 容器能够访问的主机名或宿主机网关地址，并保留 `/v1` 后缀。不要把统一密钥
+放进 URL、截图或 issue 报告。当前 Console 字段名称以 QwenPaw 的
+[官方模型配置指南](https://qwenpaw.agentscope.io/docs/models/)为准。
 
 ## 原生 Gemini 客户端
 
