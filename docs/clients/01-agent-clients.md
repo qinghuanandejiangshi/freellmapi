@@ -147,20 +147,22 @@ unified key from its dashboard, then open **Settings → Models** in the QwenPaw
 Console:
 
 1. Under **Providers**, choose **Add Provider**.
-2. Give it an id such as `freellmapi` and a display name such as `FreeLLMAPI`.
-3. Select the OpenAI `chat.completions` compatibility mode.
-4. Set **Base URL** to `http://localhost:3001/v1` and **API Key** to your
-   FreeLLMAPI unified key.
-5. Add a model under this provider. Use `auto` to let FreeLLMAPI route the
-   request, or copy a current model id from `GET http://localhost:3001/v1/models`.
-6. Select the new provider and model, then use **Test Connection** before
-   saving.
+2. Give it a **Provider ID** such as `freellmapi` and a **Provider Name** such
+   as `FreeLLMAPI`, and set the API compatibility mode to OpenAI
+   `chat.completions`.
+3. Open the new provider's settings and set **Base URL** to
+   `http://localhost:3001/v1` and **API Key** to your FreeLLMAPI unified key.
+4. On the provider's models page, add a model. Use `auto` as the **Model ID**
+   to let FreeLLMAPI route the request, or copy a current id from
+   `GET http://localhost:3001/v1/models`.
+5. Save, then pick the model as the default (or per chat) and send a test
+   message.
 
 If QwenPaw runs in a container, `localhost` refers to that container rather
 than the host running FreeLLMAPI. Use a hostname or host-gateway address that
 the QwenPaw container can reach, while keeping the `/v1` suffix. Do not put the
 unified key in a URL, screenshot, or issue report. See QwenPaw's
-[official model configuration guide](https://qwenpaw.agentscope.io/docs/models/)
+[official model configuration guide](https://qwenpaw.agentscope.io/docs/models)
 for the current Console field names.
 
 ## Native Gemini clients

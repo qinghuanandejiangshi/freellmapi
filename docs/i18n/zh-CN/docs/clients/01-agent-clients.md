@@ -71,22 +71,22 @@ npx @deepseek-ai/dsh web
 ### QwenPaw
 
 [QwenPaw](https://github.com/agentscope-ai/QwenPaw) 支持使用 OpenAI
-`chat.completions` API 的自定义提供方。先启动 FreeLLMAPI，并从其仪表盘创建或复制统一密钥，
-然后在 QwenPaw Console 中打开 **Settings → Models**：
+`chat.completions` API 的自定义提供商。先启动 FreeLLMAPI，并从其仪表盘创建或复制统一密钥，
+然后在 QwenPaw Console 中打开 **设置 → 模型**：
 
-1. 在 **Providers** 下选择 **Add Provider**。
-2. 将 id 设为 `freellmapi` 等便于识别的值，显示名称可设为 `FreeLLMAPI`。
-3. 兼容模式选择 OpenAI `chat.completions`。
-4. 将 **Base URL** 设为 `http://localhost:3001/v1`，将 **API Key** 设为
-   FreeLLMAPI 统一密钥。
-5. 在该提供方下添加模型。可使用 `auto` 让 FreeLLMAPI 自动路由，或从
-   `GET http://localhost:3001/v1/models` 复制当前可用的模型 id。
-6. 选中新提供方和模型，保存前先执行 **Test Connection**。
+1. 在 **提供商** 下选择 **添加提供商**。
+2. 填写 **提供商 ID**（例如 `freellmapi`）和 **提供商名称**（例如 `FreeLLMAPI`），
+   并将 API 兼容模式设为 OpenAI `chat.completions`。
+3. 进入该提供商的设置页，将 **Base URL** 设为 `http://localhost:3001/v1`，
+   将 **API 密钥** 设为 FreeLLMAPI 统一密钥。
+4. 在该提供商的模型页面添加模型。**模型 ID** 可填 `auto` 让 FreeLLMAPI 自动路由，
+   或从 `GET http://localhost:3001/v1/models` 复制当前可用的模型 id。
+5. 保存后把该模型设为默认（或在单次对话中选用），并发一条消息验证。
 
 如果 QwenPaw 在容器中运行，`localhost` 指向的是该容器，而不是运行 FreeLLMAPI 的宿主机。
 请改用 QwenPaw 容器能够访问的主机名或宿主机网关地址，并保留 `/v1` 后缀。不要把统一密钥
 放进 URL、截图或 issue 报告。当前 Console 字段名称以 QwenPaw 的
-[官方模型配置指南](https://qwenpaw.agentscope.io/docs/models/)为准。
+[官方模型配置指南](https://qwenpaw.agentscope.io/docs/models)为准。
 
 ## 原生 Gemini 客户端
 
